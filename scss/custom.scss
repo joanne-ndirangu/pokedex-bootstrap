@@ -1,3 +1,13 @@
 $body-bg: black;
 
+.hidden {
+    display: none;
+}
+
+.character-card {
+    background-color: #484747;
+    color: rgb(217, 216, 216);
+    border-radius: 10px;
+}
+
 @import "../node_modules/bootstrap/scss/bootstrap"

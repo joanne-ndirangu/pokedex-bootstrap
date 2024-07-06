@@ -6965,7 +6965,7 @@ document.addEventListener('DOMContentLoaded', function () {
   function createPokemonCard(pokemon) {
     var card = document.createElement('div');
     card.className = 'col mb-4';
-    card.innerHTML = "\n            <div class=\"character-card\">\n                <img src=\"".concat(pokemon.sprites.front_default, "\" alt=\"").concat(pokemon.name, "\">\n                <h2>").concat(pokemon.name, "</h2>\n                <p>Type: ").concat(pokemon.types.map(function (type) {
+    card.innerHTML = "\n            <div class=\"character-card m-10 p-20 d-flex flex-column align-items-center\">\n                <img class=\"w-30 h-30\" src=\"".concat(pokemon.sprites.front_default, "\" alt=\"").concat(pokemon.name, "\">\n                <h2>").concat(pokemon.name, "</h2>\n                <p>Type: ").concat(pokemon.types.map(function (type) {
       return type.type.name;
     }).join(', '), "</p>\n                <div class=\"character-details hidden\">\n                    <p>Abilities: ").concat(pokemon.abilities.map(function (ability) {
       return ability.ability.name;

@@ -6916,6 +6916,109 @@ defineJQueryPlugin(Toast);
 var bootstrap = _interopRequireWildcard(require("bootstrap"));
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
+document.addEventListener('DOMContentLoaded', function () {
+  var searchInput = document.getElementById('search-input');
+  var characterList = document.getElementById('character-list');
+  var prevPageButton = document.getElementById('prev-page');
+  var nextPageButton = document.getElementById('next-page');
+  var allPokemon = [];
+  var filteredPokemon = [];
+  var currentPage = 1;
+  var itemsPerPage = 9;
+
+  // Fetch Pokemon data from PokeAPI
+  fetch('https://pokeapi.co/api/v2/pokemon?limit=151').then(function (res) {
+    return res.json();
+  }).then(function (data) {
+    var fetchPromises = data.results.map(function (pokemon) {
+      return fetch(pokemon.url).then(function (res) {
+        return res.json();
+      });
+    });
+    return Promise.all(fetchPromises);
+  }).then(function (pokemonData) {
+    allPokemon = pokemonData; // Store all Pokemon data
+    filteredPokemon = allPokemon.slice(); // Initially, filteredPokemon is the same as allPokemon
+    displayPage(currentPage); // Initial display of first page of Pokemon
+  }).catch(function (error) {
+    return console.error('Error fetching Pokemon data:', error);
+  });
+
+  // Function to display a page of Pokemon
+  function displayPage(page) {
+    characterList.innerHTML = ''; // Clear previous content
+
+    var start = (page - 1) * itemsPerPage;
+    var end = page * itemsPerPage;
+    var paginatedItems = filteredPokemon.slice(start, end);
+    paginatedItems.forEach(function (pokemon) {
+      var card = createPokemonCard(pokemon);
+      characterList.appendChild(card);
+    });
+
+    // Update pagination buttons
+    prevPageButton.disabled = currentPage === 1;
+    nextPageButton.disabled = end >= filteredPokemon.length;
+  }
+
+  // Function to create a Pokemon card
+  function createPokemonCard(pokemon) {
+    var card = document.createElement('div');
+    card.className = 'col mb-4';
+    card.innerHTML = "\n            <div class=\"character-card\">\n                <img src=\"".concat(pokemon.sprites.front_default, "\" alt=\"").concat(pokemon.name, "\">\n                <h2>").concat(pokemon.name, "</h2>\n                <p>Type: ").concat(pokemon.types.map(function (type) {
+      return type.type.name;
+    }).join(', '), "</p>\n                <div class=\"character-details hidden\">\n                    <p>Abilities: ").concat(pokemon.abilities.map(function (ability) {
+      return ability.ability.name;
+    }).join(', '), "</p>\n                    <p>Base Stats:</p>\n                    <ul>\n                        ").concat(pokemon.stats.map(function (stat) {
+      return "<li>".concat(stat.stat.name, ": ").concat(stat.base_stat, "</li>");
+    }).join(''), "\n                    </ul>\n                </div>\n            </div>\n        ");
+
+    // Click functionality to toggle details
+    card.querySelector('.character-card').addEventListener('click', function () {
+      var details = this.querySelector('.character-details');
+      details.style.display = details.style.display === 'block' ? 'none' : 'block';
+    });
+    return card;
+  }
+
+  // Event listener for previous page button
+  prevPageButton.addEventListener('click', function () {
+    if (currentPage > 1) {
+      currentPage--;
+      displayPage(currentPage);
+    }
+  });
+
+  // Event listener for next page button
+  nextPageButton.addEventListener('click', function () {
+    if (currentPage * itemsPerPage < filteredPokemon.length) {
+      currentPage++;
+      displayPage(currentPage);
+    }
+  });
+
+  // Function to filter Pokemon based on search term
+  function filterCharacters(searchTerm) {
+    searchTerm = searchTerm.trim().toLowerCase();
+    if (searchTerm === '') {
+      // If search term is empty, reset filteredPokemon to allPokemon
+      filteredPokemon = allPokemon.slice();
+    } else {
+      // Filter allPokemon based on search term
+      filteredPokemon = allPokemon.filter(function (pokemon) {
+        return pokemon.name.toLowerCase().includes(searchTerm);
+      });
+    }
+    currentPage = 1; // Reset to first page on search or clear
+
+    displayPage(currentPage); // Display the filtered or all characters
+  }
+
+  // Search functionality
+  searchInput.addEventListener('input', function () {
+    filterCharacters(this.value);
+  });
+});
 },{"bootstrap":"../node_modules/bootstrap/dist/js/bootstrap.esm.js"}],"../../../../AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';

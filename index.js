@@ -1,4 +1,4 @@
-import * as bootstrap from 'bootstrap'
+// import * as bootstrap from './node_modules/bootstrap/scss/bootstrap'
 
 document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('search-input');

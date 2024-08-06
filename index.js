@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const characterList = document.getElementById('character-list');
     const prevPageButton = document.getElementById('prev-page');
     const nextPageButton = document.getElementById('next-page');
+    const typeFilter = document.getElementById('type-filter');
 
     let allPokemon = [];
     let filteredPokemon = [];
@@ -110,4 +111,24 @@ document.addEventListener('DOMContentLoaded', function() {
     searchInput.addEventListener('input', function() {
         filterCharacters(this.value);
     });
+
+    // Event listener for type filter
+    typeFilter.addEventListener('change', function() {
+        filterByType(this.value);
+    });
+
+   // Function to filter Pokemon by type
+    function filterByType(type) {
+        if (type === '') {
+            filteredPokemon = allPokemon.slice(); // Corrected from 'pokemon' to 'allPokemon'
+        } else {
+        filteredPokemon = allPokemon.filter(pokemon =>
+            pokemon.types.some(p => p.type.name.toLowerCase() === type.toLowerCase())
+        );
+    }
+
+    // Reset pagination
+    currentPage = 1;
+    displayPage(currentPage);
+}
 });

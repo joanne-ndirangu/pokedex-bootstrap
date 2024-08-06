@@ -13,8 +13,17 @@
         .character-card {
             background-color: #484747;
             color: rgb(217, 216, 216);
+            padding: 20px;
             border-radius: 10px;
+            margin: 10px;
+            min-width: 250px;
         }
+
+        .character-image {
+            width: 100px;
+            height: 100px;
+        }
+
         #search-input {
             width: 40%;
         }
@@ -24,11 +33,11 @@
         }
     </style>
 </head>
-<body class="bg-black">
-    <div class="container my-4">
+<body class="bg-black m-4">
+    <div class="container my-1">
         <div class="d-flex justify-content-between align-items-center">
             <h1 class="text-white display-4">Pokédex</h1>
-            <div class="d-flex justify-content-center align-items-center w-100 my-4">
+            <div class="d-flex justify-content-center align-items-center w-100 my-1">
                 <div class="d-flex justify-content-center align-items-center w-100 m-4">
                     <input id="search-input" type="text" class="form-control px-3 py-2 rounded m-4" placeholder="Search Pokémon">
                     <select id="type-filter" class="form-select px-3 py-2 rounded ms-3">
@@ -57,7 +66,7 @@
         </div>
     </div>
     <div class="d-flex justify-content-center">
-        <div id="character-list" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-2 mx-auto"></div>
+        <div id="character-list" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mx-auto"></div>
     </div>
     <footer>
         <div class="pagination-controls d-flex justify-content-center my-4">

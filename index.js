@@ -52,8 +52,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const card = document.createElement('div');
         card.className = 'col mb-4';
         card.innerHTML = `
-            <div class="character-card m-10 p-20 d-flex flex-column align-items-center">
-                <img class="w-30 h-30" src="${pokemon.sprites.front_default}" alt="${pokemon.name}">
+            <div class="character-card">
+                <img class="character-image" src="${pokemon.sprites.front_default}" alt="${pokemon.name}">
                 <h2>${pokemon.name}</h2>
                 <p>Type: ${pokemon.types.map(type => type.type.name).join(', ')}</p>
                 <div class="character-details hidden">

@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const prevPageButton = document.getElementById('prev-page');
     const nextPageButton = document.getElementById('next-page');
     const typeFilter = document.getElementById('type-filter');
+    const paginationButtons = document.getElementById('pagination-buttons');
 
     let allPokemon = [];
     let filteredPokemon = [];
@@ -42,6 +43,8 @@ document.addEventListener('DOMContentLoaded', function() {
         // Update pagination buttons
         prevPageButton.disabled = currentPage === 1;
         nextPageButton.disabled = end >= filteredPokemon.length;
+
+        updatePagination();
     }
 
     // Function to create a Pokemon card
@@ -130,5 +133,21 @@ document.addEventListener('DOMContentLoaded', function() {
     // Reset pagination
     currentPage = 1;
     displayPage(currentPage);
-}
+    }
+
+    function updatePagination() {
+        const totalPages = Math.ceil(filteredPokemon.length / itemsPerPage);
+        paginationButtons.innerHTML = ''; // Clear previous content
+
+        for (let i = 1; i <= totalPages; i++) {
+            const button = document.createElement('button');
+            button.textContent = i;
+            button.classList.add();
+            button.addEventListener('click', function() {
+                currentPage = i;
+                displayPage(currentPage);
+            });
+            paginationButtons.appendChild(button);
+        }
+    }
 });
